@@ -1,0 +1,43 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <body>
+      <section class="container">
+        <div class="login-container">
+          <div class="circle circle-one"></div>
+          <div class="form-container">
+            <img
+              src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png"
+              alt="illustration"
+              class="illustration"
+            />
+            <h1 class="opacity">SIGN-UP</h1>
+            <form action="{% url "signup" %}" method="POST">
+      {% csrf_token %}
+      <input type="text" placeholder="firstname"name="firstname" id="" />
+      <input type="text" placeholder="lastname"name="lastname" id="" />
+      <input type="text" placeholder="username"name="username" id="" />
+      <input type="email" name="email" placeholder="email" id="" />
+      <input type="password" name="password" placeholder="password" id="" />
+     <button>register</button>
+    </form>
+            <div class="register-forget opacity">
+              <a href="">REGISTER</a>
+              <a href="">FORGOT PASSWORD</a>
+            </div>
+          </div>
+          <div class="circle circle-two"></div>
+        </div>
+        <div class="theme-btn-container"></div>
+      </section>
+    </body>
+    <!-- partial -->
+  </body>
+</html>

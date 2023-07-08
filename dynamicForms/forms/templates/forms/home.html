@@ -1,0 +1,11 @@
+<button><a href="{% url 'login' %}">login</a></button>
+<button><a href="{% url 'signup' %}">signup</a></button>
+<button><a href="{% url 'logout' %}">logout</a></button>
+
+{% if request.user.is_authenticated %}
+
+<p>username :{{ request.user.username }}</p>
+<button><a href="{% url 'create' %}">create your form</a></button>
+{% else %}
+<p>login or signup to continue</p>
+{% endif %}
