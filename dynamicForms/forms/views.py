@@ -50,6 +50,6 @@ def create(request):
     return render(request,'forms/create.html')
 
 def created(request):
-    form_obj = formBuilder(title="First Blog", added_by=request.user)
+    form_obj = formBuilder(title="forms", added_by=request.user)
     form_obj.save()
     return render(request,"forms/home.html")
