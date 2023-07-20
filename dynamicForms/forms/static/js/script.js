@@ -7,9 +7,13 @@ const data = document.createElement("div");
 const selectdiv = document.createElement("div");
 const countdiv = document.createElement("div");
 const labels_div = document.createElement("div");
+const submit_labels = document.createElement("button");
+const get_question = document.createElement("div");
+const question_input = document.createElement("input");
+const submit_question = document.createElement("button");
 
 const forms = [];
-// localStorage.setItem(JSON.stringify(forms));
+//---------in canvas------------//
 create.addEventListener("click", () => {
   const obj = {
     id: Date.now(),
@@ -23,17 +27,26 @@ create.addEventListener("click", () => {
     data.removeChild(data.children[0]);
   }
 
+  while (selectdiv.hasChildNodes()) {
+    selectdiv.removeChild(selectdiv.children[0]);
+  }
+
+  while (countdiv.hasChildNodes()) {
+    countdiv.removeChild(countdiv.children[0]);
+  }
+
+  while (labels_div.hasChildNodes()) {
+    labels_div.removeChild(labels_div.children[0]);
+  }
+
   instruction.innerHTML = "enter the question";
 
   canvas.appendChild(data);
 
-  const get_question = document.createElement("div");
   data.appendChild(get_question);
 
-  const question_input = document.createElement("input");
   get_question.appendChild(question_input);
 
-  const submit_question = document.createElement("button");
   submit_question.innerHTML = "submit_question";
   get_question.appendChild(submit_question);
 
@@ -106,14 +119,39 @@ create.addEventListener("click", () => {
       console.log(obj);
       data.appendChild(labels_div);
 
-      for (i = 0; i < obj.count; i++) {
-        const labelnum = i;
-        const name = "label${labelnum}";
+      for (i = 1; i <= obj.count; i++) {
+        const label_input = document.createElement("input");
+        label_input.name = `label`;
+        labels_div.appendChild(label_input);
       }
+
+      const alllabels = document.getElementsByName(`label`);
+      const final_label = alllabels[obj.count - 1];
+
+      final_label.onclick = () => {
+        submit_labels.innerHTML = "submit labels";
+        labels_div.appendChild(submit_labels);
+      };
+
+      submit_labels.onclick = () => {
+        const alllabels = document.getElementsByName(`label`);
+        for (i = 1; i <= obj.count; i++) {
+          obj.labels.push(alllabels[i - 1].value);
+          console.log(obj);
+        }
+        labels_div.removeChild(submit_labels);
+      };
     };
   };
 
   const submit_div = document.createElement("button");
   submit_div.innerHTML = "create-question";
   data.appendChild(submit_div);
+
+  submit_div.addEventListener("click", () => {
+    forms.push(obj);
+    console.log(forms);
+  });
 });
+
+//--------inside form------------//
