@@ -4,164 +4,147 @@ const instruction = document.getElementById("instruction");
 const create = document.getElementById("createQuestion");
 const form = document.getElementById("myForm");
 const data = document.createElement("div");
-const selectdiv = document.createElement("div");
-const countdiv = document.createElement("div");
-const labels_div = document.createElement("div");
-const submit_labels = document.createElement("button");
-const get_question = document.createElement("div");
-const question_input = document.createElement("input");
-const submit_question = document.createElement("button");
-const closeButon = document.querySelector(".btn-close");
-const submit_div = document.createElement("button");
+const sectionNamediv = document.createElement("div");
+const addInput = document.createElement("button");
+const addinputsDiv = document.createElement("div");
+const countDiv = document.createElement("div");
+const labelsDiv = document.createElement("div");
+const submitLabels = document.createElement("button");
+const getQuestion = document.createElement("div");
+const questionInput = document.createElement("input");
+const createQuestion = document.createElement("button");
+const closeButton = document.querySelector(".btn-close");
+const submitDiv = document.createElement("button");
 
-const forms = [];
+//after changes
+
+const duplicate = [];
 // window.onload = () => {
 //   updateDom();
 // };
 //---------in canvas------------//
 create.addEventListener("click", () => {
+  const forms = [];
   const obj = {
     id: Date.now(),
     question: "",
-    input_type: "",
-    count: "",
+    inputTypes: [],
     labels: [],
   };
 
-  while (data.hasChildNodes()) {
-    data.removeChild(data.children[0]);
-  }
-
-  while (selectdiv.hasChildNodes()) {
-    selectdiv.removeChild(selectdiv.children[0]);
-  }
-
-  while (countdiv.hasChildNodes()) {
-    countdiv.removeChild(countdiv.children[0]);
-  }
-
-  while (labels_div.hasChildNodes()) {
-    labels_div.removeChild(labels_div.children[0]);
-  }
-
-  // while (submit_div.hasChildNodes()) {
-  //   submit_div.removeChild(submit_div.children[0]);
+  // if (obj.inputTypes.length !== 0) {
+  //   canvas.appendChild(createQuestion);
+  //   createQuestion.innerHTML = "create this section";
+  //   createQuestion.addEventListener("click", () => {
+  //     forms.push(obj);
+  //     console.log(forms);
+  //   });
   // }
 
-  instruction.innerHTML = "enter the question";
-
   canvas.appendChild(data);
+  addInput.innerHTML = "addInput";
+  data.appendChild(sectionNamediv);
 
-  data.appendChild(get_question);
+  const sectionName = document.createElement("input");
+  sectionNamediv.appendChild(sectionName);
+  const sectionNamebutton = document.createElement("button");
+  sectionNamebutton.innerHTML = "ok";
+  sectionNamediv.appendChild(sectionNamebutton);
 
-  get_question.appendChild(question_input);
-
-  submit_question.innerHTML = "submit_question";
-  get_question.appendChild(submit_question);
-
-  submit_question.addEventListener("click", () => {
-    obj.question = question_input.value;
-    data.appendChild(selectdiv);
-
-    console.log(obj);
+  sectionNamebutton.addEventListener("click", () => {
+    obj.question = sectionName.value;
+    data.appendChild(addInput);
+    sectionNamediv.removeChild(sectionNamebutton);
   });
 
-  const select = document.createElement("select");
-  selectdiv.appendChild(select);
+  addInput.addEventListener("click", () => {
+    data.appendChild(addinputsDiv);
+    const selectType = document.createElement("select");
+    addinputsDiv.appendChild(selectType);
 
-  const selectinputview = document.createElement("option");
-  selectinputview.innerHTML = "select a input type";
-  select.appendChild(selectinputview);
+    const labelTextcontent = document.createElement("input");
+    addinputsDiv.appendChild(labelTextcontent);
 
-  const multiple_option = document.createElement("option");
-  multiple_option.innerHTML = "multiple choice";
-  select.appendChild(multiple_option);
+    const createThisInp = document.createElement("button");
+    createThisInp.innerHTML = "done";
+    addinputsDiv.appendChild(createThisInp);
 
-  const text_option = document.createElement("option");
-  text_option.innerHTML = "text";
-  select.appendChild(text_option);
+    const selectinputview = document.createElement("option");
+    selectinputview.innerHTML = "select a input type";
+    selectType.appendChild(selectinputview);
 
-  const number_option = document.createElement("option");
-  number_option.innerHTML = "number";
-  select.appendChild(number_option);
+    const multiple_option = document.createElement("option");
+    multiple_option.innerHTML = "multiple choice";
+    selectType.appendChild(multiple_option);
 
-  const email_option = document.createElement("option");
-  email_option.innerHTML = "email";
-  select.appendChild(email_option);
+    const text_option = document.createElement("option");
+    text_option.innerHTML = "text";
+    selectType.appendChild(text_option);
 
-  const password_option = document.createElement("option");
-  password_option.innerHTML = "password";
-  select.appendChild(password_option);
+    const number_option = document.createElement("option");
+    number_option.innerHTML = "number";
+    selectType.appendChild(number_option);
 
-  const file_option = document.createElement("option");
-  file_option.innerHTML = "file";
-  select.appendChild(file_option);
+    const email_option = document.createElement("option");
+    email_option.innerHTML = "email";
+    selectType.appendChild(email_option);
 
-  const date_option = document.createElement("option");
-  date_option.innerHTML = "date";
-  select.appendChild(date_option);
+    const password_option = document.createElement("option");
+    password_option.innerHTML = "password";
+    selectType.appendChild(password_option);
 
-  const textarea_option = document.createElement("option");
-  textarea_option.innerHTML = "message";
-  select.appendChild(textarea_option);
+    const file_option = document.createElement("option");
+    file_option.innerHTML = "file";
+    selectType.appendChild(file_option);
 
-  const checkbox_option = document.createElement("option");
-  checkbox_option.innerHTML = "checkbox";
-  select.appendChild(checkbox_option);
+    const date_option = document.createElement("option");
+    date_option.innerHTML = "date";
+    selectType.appendChild(date_option);
 
-  select.onchange = () => {
-    obj.input_type = select.value;
-    data.appendChild(countdiv);
-  };
+    const textarea_option = document.createElement("option");
+    textarea_option.innerHTML = "message";
+    selectType.appendChild(textarea_option);
 
-  const count = document.createElement("input");
-  count.type = "number";
-  countdiv.appendChild(count);
-  count.onclick = () => {
-    const get_count = document.createElement("button");
-    get_count.innerHTML = "save inp count";
-    countdiv.appendChild(get_count);
+    const checkbox_option = document.createElement("option");
+    checkbox_option.innerHTML = "checkbox";
+    selectType.appendChild(checkbox_option);
 
-    get_count.onclick = () => {
-      obj.count = count.value;
-      countdiv.removeChild(get_count);
-      console.log(obj);
-      data.appendChild(labels_div);
+    data.removeChild(addInput);
 
-      for (i = 1; i <= obj.count; i++) {
-        const label_input = document.createElement("input");
-        label_input.name = `label`;
-        labels_div.appendChild(label_input);
+    createThisInp.addEventListener("click", () => {
+      if (selectType.value == "select a input type") {
+        alert("select the input type vro");
       }
+      if (labelTextcontent.value == "") {
+        alert("add some text content for the label vro");
+      } else {
+        obj.inputTypes.push(selectType.value);
+        obj.labels.push(labelTextcontent.value);
+        addinputsDiv.removeChild(createThisInp);
+        data.appendChild(addInput);
+        console.log(obj);
 
-      const alllabels = document.getElementsByName(`label`);
-      const final_label = alllabels[obj.count - 1];
+        // const question = {
+        //   id: obj.id,
+        //   question: JSON.stringify(obj.question),
+        //   inputTypes: JSON.stringify(obj.inputTypes),
+        //   labels: obj.labels,
+        // };
 
-      final_label.onclick = () => {
-        submit_labels.innerHTML = "submit labels";
-        labels_div.appendChild(submit_labels);
-      };
-
-      submit_labels.onclick = () => {
-        const alllabels = document.getElementsByName(`label`);
-        console.log(alllabels);
-        for (i = 1; i <= obj.count; i++) {
-          obj.labels.push(alllabels[i - 1].value);
-          console.log(obj);
+        if (obj.inputTypes.length !== 0) {
+          canvas.appendChild(createQuestion);
+          createQuestion.innerHTML = "create this section";
+          createQuestion.addEventListener("click", () => {
+            // duplicate.push(obj);
+            // forms.push(duplicate[duplicate.length - 1]);
+            // console.log(duplicate[duplicate.length - 1]);
+            // forms.push({ ...obj });
+            forms.push(obj);
+            console.log(forms);
+          });
         }
-        labels_div.removeChild(submit_labels);
-
-        submit_div.innerHTML = "create-question";
-        data.appendChild(submit_div);
-      };
-    };
-  };
-
-  submit_div.addEventListener("click", () => {
-    forms.push(obj);
-    console.log(forms);
-    closeButon.click();
-    updateDom();
+      }
+    });
   });
 });
 
