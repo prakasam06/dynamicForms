@@ -11,8 +11,13 @@ const submit_labels = document.createElement("button");
 const get_question = document.createElement("div");
 const question_input = document.createElement("input");
 const submit_question = document.createElement("button");
+const closeButon = document.querySelector(".btn-close");
+const submit_div = document.createElement("button");
 
 const forms = [];
+// window.onload = () => {
+//   updateDom();
+// };
 //---------in canvas------------//
 create.addEventListener("click", () => {
   const obj = {
@@ -38,6 +43,10 @@ create.addEventListener("click", () => {
   while (labels_div.hasChildNodes()) {
     labels_div.removeChild(labels_div.children[0]);
   }
+
+  // while (submit_div.hasChildNodes()) {
+  //   submit_div.removeChild(submit_div.children[0]);
+  // }
 
   instruction.innerHTML = "enter the question";
 
@@ -135,23 +144,56 @@ create.addEventListener("click", () => {
 
       submit_labels.onclick = () => {
         const alllabels = document.getElementsByName(`label`);
+        console.log(alllabels);
         for (i = 1; i <= obj.count; i++) {
           obj.labels.push(alllabels[i - 1].value);
           console.log(obj);
         }
         labels_div.removeChild(submit_labels);
+
+        submit_div.innerHTML = "create-question";
+        data.appendChild(submit_div);
       };
     };
   };
 
-  const submit_div = document.createElement("button");
-  submit_div.innerHTML = "create-question";
-  data.appendChild(submit_div);
-
   submit_div.addEventListener("click", () => {
     forms.push(obj);
     console.log(forms);
+    closeButon.click();
+    updateDom();
   });
 });
 
 //--------inside form------------//
+
+function updateDom() {
+  while (form.hasChildNodes()) {
+    form.removeChild(form.children[0]);
+  }
+  forms.forEach((ques) => {
+    const question = document.createElement("div");
+    question.setAttribute("id", ques.id);
+    form.appendChild(question);
+
+    const quesTag = document.createElement("h2");
+    quesTag.innerHTML = ques.question;
+    question.appendChild(quesTag);
+
+    const inputsContainer = document.createElement("div");
+    question.appendChild(inputsContainer);
+
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = ques.input_type;
+    // label.innerHTML = ques.labels[];
+    label.name = `label${ques.id}`;
+    input.name = `input${ques.id}`;
+    ques.labels.forEach((label) => {
+      // label.innerHTML = label;
+      console.log(label);
+    });
+    inputsContainer.appendChild(label);
+    inputsContainer.appendChild(input);
+  });
+}
