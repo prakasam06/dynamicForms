@@ -5,46 +5,43 @@ const create = document.getElementById("createQuestion");
 const form = document.getElementById("myForm");
 const data = document.createElement("div");
 const sectionNamediv = document.createElement("div");
-const addInput = document.createElement("button");
 const addinputsDiv = document.createElement("div");
+const addInput = document.createElement("button");
+const allInputs = document.createElement("section");
 const countDiv = document.createElement("div");
 const labelsDiv = document.createElement("div");
 const submitLabels = document.createElement("button");
 const getQuestion = document.createElement("div");
 const questionInput = document.createElement("input");
-const createQuestion = document.createElement("button");
+const createQuestionsection = document.createElement("button");
 const closeButton = document.querySelector(".btn-close");
 const submitDiv = document.createElement("button");
 
 //after changes
 
-const duplicate = [];
 // window.onload = () => {
 //   updateDom();
 // };
 //---------in canvas------------//
+const forms = [];
 create.addEventListener("click", () => {
-  const forms = [];
   const obj = {
     id: Date.now(),
-    question: "",
-    inputTypes: [],
-    labels: [],
+    sectionName: "",
+    questions: [],
   };
-
-  // if (obj.inputTypes.length !== 0) {
-  //   canvas.appendChild(createQuestion);
-  //   createQuestion.innerHTML = "create this section";
-  //   createQuestion.addEventListener("click", () => {
-  //     forms.push(obj);
-  //     console.log(forms);
-  //   });
-  // }
+  const questionsObj = {
+    name: "",
+    required: "",
+    label: "",
+    type: "",
+    index: "",
+  };
 
   canvas.appendChild(data);
   addInput.innerHTML = "addInput";
   data.appendChild(sectionNamediv);
-
+  data.appendChild(allInputs);
   const sectionName = document.createElement("input");
   sectionNamediv.appendChild(sectionName);
   const sectionNamebutton = document.createElement("button");
@@ -52,7 +49,7 @@ create.addEventListener("click", () => {
   sectionNamediv.appendChild(sectionNamebutton);
 
   sectionNamebutton.addEventListener("click", () => {
-    obj.question = sectionName.value;
+    obj.sectionName = sectionName.value;
     data.appendChild(addInput);
     sectionNamediv.removeChild(sectionNamebutton);
   });
@@ -63,7 +60,20 @@ create.addEventListener("click", () => {
     addinputsDiv.appendChild(selectType);
 
     const labelTextcontent = document.createElement("input");
+    labelTextcontent.placeholder = "label content";
     addinputsDiv.appendChild(labelTextcontent);
+
+    const isRequired = document.createElement("button");
+    isRequired.innerHTML = "required";
+    addinputsDiv.appendChild(isRequired);
+
+    const thisInputName = document.createElement("input");
+    thisInputName.placeholder = "inputName";
+    addinputsDiv.appendChild(thisInputName);
+
+    const deleteDIV = document.createElement("button");
+    deleteDIV.innerHTML = "Delete";
+    addinputsDiv.appendChild(deleteDIV);
 
     const createThisInp = document.createElement("button");
     createThisInp.innerHTML = "done";
@@ -111,6 +121,14 @@ create.addEventListener("click", () => {
 
     data.removeChild(addInput);
 
+    isRequired.addEventListener("click", () => {
+      if (isRequired.innerHTML == "required") {
+        isRequired.innerHTML = "notRequired";
+      } else {
+        isRequired.innerHTML = "required";
+      }
+    });
+
     createThisInp.addEventListener("click", () => {
       if (selectType.value == "select a input type") {
         alert("select the input type vro");
@@ -118,32 +136,45 @@ create.addEventListener("click", () => {
       if (labelTextcontent.value == "") {
         alert("add some text content for the label vro");
       } else {
-        obj.inputTypes.push(selectType.value);
-        obj.labels.push(labelTextcontent.value);
-        addinputsDiv.removeChild(createThisInp);
-        data.appendChild(addInput);
-        console.log(obj);
+        if (localStorage.getItem("count") !== null) {
+          const count = localStorage.getItem("count");
+          const toadd = Number(count);
+          const newCount = toadd + 1;
+          console.log(newCount);
+          localStorage.setItem("count", newCount);
 
-        // const question = {
-        //   id: obj.id,
-        //   question: JSON.stringify(obj.question),
-        //   inputTypes: JSON.stringify(obj.inputTypes),
-        //   labels: obj.labels,
-        // };
+          const index = [...allInputs.parentElement.children].indexOf(
+            allInputs
+          );
+
+          console.log(index);
+
+          addinputsDiv.removeChild(isRequired);
+          addinputsDiv.removeChild(createThisInp);
+          addinputsDiv.removeChild(isRequired);
+          addinputsDiv.removeChild(thisInputName);
+          data.appendChild(addInput);
+        } else {
+          const count = 0;
+          localStorage.setItem("count", count);
+
+          addinputsDiv.removeChild(createThisInp);
+          addinputsDiv.removeChild(isRequired);
+          addinputsDiv.removeChild(thisInputName);
+          data.appendChild(addInput);
+        }
 
         if (obj.inputTypes.length !== 0) {
-          canvas.appendChild(createQuestion);
-          createQuestion.innerHTML = "create this section";
-          createQuestion.addEventListener("click", () => {
-            // duplicate.push(obj);
-            // forms.push(duplicate[duplicate.length - 1]);
-            // console.log(duplicate[duplicate.length - 1]);
-            // forms.push({ ...obj });
-            forms.push(obj);
-            console.log(forms);
-          });
+          canvas.appendChild(createQuestionsection);
+          createQuestionsection.innerHTML = "create this section";
         }
       }
+    });
+    createQuestionsection.addEventListener("click", () => {
+      console.log(obj);
+      forms.push(obj);
+      console.log(forms);
+      localStorage.clear("count");
     });
   });
 });

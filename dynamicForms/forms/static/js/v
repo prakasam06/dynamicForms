@@ -1,0 +1,29 @@
+let sections = [
+  {
+    sectionName: "section1",
+    questions: [
+      {
+        label: "Enter your Name",
+        name: "usrename",
+        tagType: "text",
+        requires: true,
+      },
+      {
+        label: "Enter your kitkat",
+        name: "usrename",
+        tagType: "text",
+        requires: true,
+      },
+    ],
+  },
+];
+
+sections.map((section) => {
+  console.log(section.sectionName);
+  section.questions.map((question) => {
+    console.log(question.label);
+    console.log(question.name);
+    console.log(question.tagType);
+    console.log(question.requires);
+  });
+});
