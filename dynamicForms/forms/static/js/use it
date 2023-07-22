@@ -1,0 +1,34 @@
+createMultiquestion.addEventListener("click", () => {
+  multipleSection.type = "multi";
+  multipleSection.question = multiQuestion.value;
+  if (localStorage.getItem("forms") !== null) {
+    const mulformsArr = JSON.parse(localStorage.getItem("forms"));
+    console.log(mulformsArr);
+    mulformsArr.push(multipleSection);
+    console.log(mulformsArr);
+    deleteChilds(body);
+    deleteChilds(formData);
+    deleteChilds(sectionHeaderDiv);
+    deleteChilds(allinputsDivs);
+    deleteChilds(submitSectiondiv);
+
+    deleteChilds(multiinputOPtions);
+    close.click();
+    console.log(mulformsArr);
+    localStorage.setItem("forms", JSON.stringify(mulformsArr));
+    updateDom();
+  } else {
+    const mulformsArr = [];
+    mulformsArr.splice(0, mulformsArr.length);
+    mulformsArr.push(multipleSection);
+    localStorage.setItem("forms", JSON.stringify(mulformsArr));
+    deleteChilds(body);
+    deleteChilds(formData);
+    deleteChilds(sectionHeaderDiv);
+    deleteChilds(allinputsDivs);
+    deleteChilds(submitSectiondiv);
+    deleteChilds(multiinputOPtions);
+    close.click();
+    updateDom();
+  }
+});

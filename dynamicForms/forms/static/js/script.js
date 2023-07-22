@@ -1,82 +1,98 @@
 //getting elements from static
 const canvasBody = document.getElementById("canvasBody");
+
 const openCanvas = document.getElementById("openCanvas");
 const close = document.getElementById("closeCanvas");
 
 //created elements
 //divs
-const formData = document.createElement("div");
-const sectionHeaderDiv = document.createElement("div");
-const allinputsDivs = document.createElement("div");
-const submitSectiondiv = document.createElement("div");
 
 //btns
 const createQuestion = document.createElement("button");
-const getsectionHeader = document.createElement("button");
+// const getsectionHeader = document.createElement("button");
 const getValues = document.createElement("button");
-const addInput = document.createElement("button");
-const submitSection = document.createElement("button");
 
 //inputs
-const sectionHeader = document.createElement("input");
 
 //innerhtmls
 createQuestion.innerHTML = "create this question";
-getsectionHeader.innerHTML = "ok";
-addInput.innerHTML = "add a input";
-addInput.classList.add("btn");
-addInput.classList.add("btn-dark");
-submitSection.innerHTML = "submit section";
 
 //placeholders
-sectionHeader.placeholder = "sectionHeader";
 
 //classlists added for elements
-formData.classList.add("container");
-formData.classList.add("bg-dark");
-sectionHeader.classList.add("form-control");
-sectionHeader.classList.add("mb-2");
-sectionHeaderDiv.classList.add("mb");
-sectionHeaderDiv.classList.add("form-check");
-getsectionHeader.classList.add("btn");
-getsectionHeader.classList.add("btn-primary");
 
-const forms = [];
 openCanvas.addEventListener("click", () => {
+  const formData = document.createElement("div");
+
+  const body = document.createElement("div");
+  const submitSectiondiv = document.createElement("div");
+
+  formData.classList.add("container");
+  formData.classList.add("bg-dark");
   const section = {
+    type: "",
     id: Date.now(),
     sectionName: "",
     questions: [],
   };
 
-  const formData = document.createElement("div");
   canvasBody.appendChild(formData);
 
-  formData.appendChild(sectionHeaderDiv);
+  formData.appendChild(body);
+  const sectionHeaderDiv = document.createElement("div");
+  sectionHeaderDiv.classList.add("mb");
+  sectionHeaderDiv.classList.add("form-check");
 
+  body.appendChild(sectionHeaderDiv);
+
+  const sectionHeader = document.createElement("input");
+  const getsectionHeader = document.createElement("button");
+  getsectionHeader.classList.add("btn");
+  getsectionHeader.classList.add("btn-primary");
+
+  getsectionHeader.innerHTML = "ok";
+  sectionHeader.classList.add("form-control");
+  sectionHeader.classList.add("mb-2");
+  sectionHeader.placeholder = "sectionHeader";
   sectionHeaderDiv.appendChild(sectionHeader);
   sectionHeaderDiv.appendChild(getsectionHeader);
+  const addInput = document.createElement("button");
+  const addmultiple = document.createElement("button");
+  addInput.innerHTML = "add a input";
+  addmultiple.innerHTML = "add a multiple choice ques";
+  addInput.classList.add("btn");
+  addInput.classList.add("btn-dark");
+  addmultiple.classList.add("btn");
+  addmultiple.classList.add("btn-dark");
+  const allinputsDivs = document.createElement("div");
 
   getsectionHeader.addEventListener("click", () => {
     if (sectionHeader.value == "") {
       alert("add some heading to the section");
     } else {
-      formData.appendChild(addInput);
+      body.appendChild(addInput);
+      body.appendChild(addmultiple);
       section.sectionName = sectionHeader.value;
+
+      body.appendChild(allinputsDivs);
+      while (allinputsDivs.hasChildNodes()) {
+        allinputsDivs.removeChild(allinputsDivs.children[0]);
+      }
+
       sectionHeaderDiv.removeChild(getsectionHeader);
-      formData.appendChild(allinputsDivs);
-      formData.appendChild(submitSectiondiv);
     }
   });
 
   addInput.addEventListener("click", () => {
-    while (submitSectiondiv.hasChildNodes()) {
-      submitSectiondiv.removeChild(submitSectiondiv.children[0]);
-    }
     //created elements
 
+    deleteChilds(submitSectiondiv);
+    body.appendChild(submitSectiondiv);
+
     const thisInputdiv = document.createElement("div");
+    deleteChilds(thisInputdiv);
     const inputOPtions = document.createElement("div");
+    deleteChilds(inputOPtions);
     const createthisQuestion = document.createElement("button");
     const deleteDiv = document.createElement("button");
     const checkRequired = document.createElement("button");
@@ -88,7 +104,6 @@ openCanvas.addEventListener("click", () => {
     deleteDiv.innerHTML = "delete";
     nameInput.placeholder = "name of the input";
     labelInput.placeholder = "label of the input";
-    submitSection.innerHTML = "submit section";
 
     //select and options
     const selectType = document.createElement("select");
@@ -106,6 +121,7 @@ openCanvas.addEventListener("click", () => {
     selectType.appendChild(text_option);
 
     const number_option = document.createElement("option");
+
     number_option.innerHTML = "number";
     selectType.appendChild(number_option);
 
@@ -141,7 +157,8 @@ openCanvas.addEventListener("click", () => {
     inputOPtions.appendChild(deleteDiv);
 
     inputOPtions.appendChild(createthisQuestion);
-    formData.removeChild(addInput);
+    body.removeChild(addInput);
+    body.removeChild(addmultiple);
     //select over
 
     //classlists
@@ -201,25 +218,149 @@ openCanvas.addEventListener("click", () => {
         } else {
           req = false;
         }
+        questions.type = "nonMulti";
         questions.name = nameInput.value;
         questions.required = req;
         questions.label = labelInput.value;
         questions.type = selectType.value;
-        formData.appendChild(addInput);
+        body.appendChild(addInput);
+        body.appendChild(addmultiple);
         inputOPtions.removeChild(createthisQuestion);
         thisInputdiv.removeChild(checkRequired);
         console.log(questions);
         section.questions.push(questions);
         console.log(section);
+
         if (section.questions.length >= 0) {
+          const submitSection = document.createElement("button");
+          submitSection.innerHTML = "submit section";
           submitSectiondiv.appendChild(submitSection);
+
+          submitSection.addEventListener("click", () => {
+            if (localStorage.getItem("forms") !== null) {
+              const formsArr = JSON.parse(localStorage.getItem("forms"));
+              console.log(formsArr);
+              formsArr.push(section);
+              console.log(formsArr);
+              deleteChilds(body);
+              deleteChilds(formData);
+              deleteChilds(sectionHeaderDiv);
+              deleteChilds(allinputsDivs);
+              deleteChilds(submitSectiondiv);
+
+              deleteChilds(inputOPtions);
+              close.click();
+              console.log(formsArr);
+              localStorage.setItem("forms", JSON.stringify(formsArr));
+              updateDom();
+            } else {
+              const forms = [];
+              forms.splice(0, forms.length);
+              forms.push(section);
+              localStorage.setItem("forms", JSON.stringify(forms));
+              deleteChilds(body);
+              deleteChilds(formData);
+              deleteChilds(sectionHeaderDiv);
+              deleteChilds(allinputsDivs);
+              deleteChilds(submitSectiondiv);
+              close.click();
+              updateDom();
+            }
+          });
         }
       }
     });
   });
-  submitSection.addEventListener("click", () => {
-    forms.push(section);
-    close.click();
-    console.log(forms);
+
+  addmultiple.addEventListener("click", () => {
+    const multipleSection = {
+      id: Date.now(),
+      type: "",
+      question: "",
+      choices: [],
+    };
+    deleteChilds(submitSectiondiv);
+    body.appendChild(submitSectiondiv);
+
+    const multiInputdiv = document.createElement("div");
+    deleteChilds(multiInputdiv);
+    const multiinputOPtions = document.createElement("div");
+    deleteChilds(multiinputOPtions);
+    const createMultiquestion = document.createElement("button");
+    createMultiquestion.innerHTML = "create question";
+    const deleteDiv = document.createElement("button");
+    deleteDiv.innerHTML = "delete";
+    allinputsDivs.appendChild(multiInputdiv);
+
+    const multiQuestion = document.createElement("input");
+    multiQuestion.placeholder = "question";
+    const addChoice = document.createElement("button");
+    addChoice.innerHTML = "add a choice";
+
+    multiInputdiv.appendChild(multiQuestion);
+    multiInputdiv.appendChild(multiinputOPtions);
+    multiinputOPtions.appendChild(addChoice);
+    multiinputOPtions.appendChild(deleteDiv);
+    multiinputOPtions.appendChild(createMultiquestion);
+
+    addChoice.addEventListener("click", () => {
+      multiInputdiv.removeChild(multiinputOPtions);
+
+      const newChoice = document.createElement("input");
+      const confirmnewChoice = document.createElement("button");
+      newChoice.placeholder = "add a option/choice";
+      multiInputdiv.appendChild(newChoice);
+
+      confirmnewChoice.innerHTML = "done";
+      multiInputdiv.appendChild(confirmnewChoice);
+    });
+    confirmnewChoice.addEventListener("click", () => {
+      multiInputdiv.removeChild(confirmnewChoice);
+      multiInputdiv.appendChild(multiinputOPtions);
+      multipleSection.choices.push(newChoice.value);
+      console.log(multipleSection);
+    });
+    createMultiquestion.addEventListener("click", () => {
+      multipleSection.type = "multi";
+      multipleSection.question = multiQuestion.value;
+      if (localStorage.getItem("forms") !== null) {
+        const mulformsArr = JSON.parse(localStorage.getItem("forms"));
+        console.log(mulformsArr);
+        mulformsArr.push(multipleSection);
+        console.log(mulformsArr);
+        deleteChilds(body);
+        deleteChilds(formData);
+        deleteChilds(sectionHeaderDiv);
+        deleteChilds(allinputsDivs);
+        deleteChilds(submitSectiondiv);
+
+        deleteChilds(multiinputOPtions);
+        close.click();
+        console.log(mulformsArr);
+        localStorage.setItem("forms", JSON.stringify(mulformsArr));
+        updateDom();
+      } else {
+        const mulformsArr = [];
+        mulformsArr.splice(0, mulformsArr.length);
+        mulformsArr.push(multipleSection);
+        localStorage.setItem("forms", JSON.stringify(mulformsArr));
+        deleteChilds(body);
+        deleteChilds(formData);
+        deleteChilds(sectionHeaderDiv);
+        deleteChilds(allinputsDivs);
+        deleteChilds(submitSectiondiv);
+        deleteChilds(multiinputOPtions);
+        close.click();
+        updateDom();
+      }
+    });
   });
 });
+
+function deleteChilds(divName) {
+  while (divName.hasChildNodes()) {
+    divName.removeChild(divName.children[0]);
+  }
+}
+
+function updateDom() {}
