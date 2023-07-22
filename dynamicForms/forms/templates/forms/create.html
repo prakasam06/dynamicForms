@@ -13,46 +13,67 @@
     <title>create_page</title>
   </head>
   <body>
-    <h1>create</h1>
-    <!-- bootstrap -->
+    <!-- navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <!-- <img
+            src=""
+            alt=""
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          /> -->
+          IForms
+        </a>
+      </div>
+    </nav>
+    <!-- navbar -->
+
+    <!-- canvas -->
 
     <div
       class="offcanvas offcanvas-end"
       data-bs-scroll="true"
+      data-bs-backdrop="false"
       tabindex="-1"
-      id="offcanvasWithBothOptions"
-      aria-labelledby="offcanvasWithBothOptionsLabel"
+      id="offcanvasScrolling"
+      aria-labelledby="offcanvasScrollingLabel"
     >
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
-          create your question here
+        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
+          create a section here!!!!!
         </h5>
         <button
           type="button"
-          class="btn-close"
+          class="btn-close text-reset"
           data-bs-dismiss="offcanvas"
           aria-label="Close"
+          id="closeCanvas"
         ></button>
       </div>
-      <div class="offcanvas-body" id="canvas_body">
-        <p id="instruction"></p>
+      <div class="offcanvas-body" id="canvasBody">
+        <p>instructions</p>
       </div>
     </div>
-    <!-- bootstrap -->
+
+    <!-- canvas -->
+
+    <!-- createButton -->
+    <button
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasScrolling"
+      aria-controls="offcanvasScrolling"
+      id="openCanvas"
+    >
+      create a section
+    </button>
+    <!-- createButton -->
 
     <div class="container">
       <form action="" id="myForm"></form>
     </div>
-
-    <button
-      id="createQuestion"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasWithBothOptions"
-      aria-controls="offcanvasWithBothOptions"
-    >
-      create_ques
-    </button>
 
     <button><a href="{% url 'created' %}">created</a></button>
 
