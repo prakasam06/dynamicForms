@@ -24,13 +24,14 @@
             height="24"
             class="d-inline-block align-text-top"
           /> -->
+
           IForms
         </a>
       </div>
     </nav>
     <!-- navbar -->
 
-    <!-- canvas -->
+    <!-- rightcanvas -->
 
     <div
       class="offcanvas offcanvas-end"
@@ -57,9 +58,47 @@
       </div>
     </div>
 
-    <!-- canvas -->
+    <!-- rightcanvas -->
+
+    <!-- leftCanvas -->
+
+    <div
+      class="offcanvas offcanvas-start"
+      data-bs-backdrop="static"
+      tabindex="-1"
+      id="staticBackdrop"
+      aria-labelledby="staticBackdropLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">MULTI BRUH</h5>
+        <button
+          type="button"
+          class="btn-close"
+          id="closemulti"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body" id="leftcanvas">
+        <p>multiple choice creation space</p>
+      </div>
+    </div>
+
+    <!--  leftCanvas-->
 
     <!-- createButton -->
+
+    <button
+      class=""
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#staticBackdrop"
+      aria-controls="staticBackdrop"
+      id="openleftcanvas"
+    >
+      add a multiple choice question
+    </button>
+
     <button
       type="button"
       data-bs-toggle="offcanvas"
@@ -67,7 +106,7 @@
       aria-controls="offcanvasScrolling"
       id="openCanvas"
     >
-      create a section
+      create a input section
     </button>
     <!-- createButton -->
 

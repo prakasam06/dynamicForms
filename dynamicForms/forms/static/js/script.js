@@ -1,9 +1,14 @@
 //getting elements from static
 const canvasBody = document.getElementById("canvasBody");
-
+const leftbody = document.getElementById("leftcanvas");
+const openleftcanvas = document.getElementById("openleftcanvas");
 const openCanvas = document.getElementById("openCanvas");
 const close = document.getElementById("closeCanvas");
+const closeMulti = document.getElementById("closemulti");
 
+// closeMulti.addEventListener("click", () => {
+//   deleteChilds(leftbody);
+// });
 //created elements
 //divs
 
@@ -23,6 +28,9 @@ createQuestion.innerHTML = "create this question";
 
 openCanvas.addEventListener("click", () => {
   const formData = document.createElement("div");
+  close.addEventListener("click", () => {
+    deleteChilds(formData);
+  });
 
   const body = document.createElement("div");
   const submitSectiondiv = document.createElement("div");
@@ -57,13 +65,12 @@ openCanvas.addEventListener("click", () => {
   sectionHeaderDiv.appendChild(sectionHeader);
   sectionHeaderDiv.appendChild(getsectionHeader);
   const addInput = document.createElement("button");
-  const addmultiple = document.createElement("button");
+
   addInput.innerHTML = "add a input";
-  addmultiple.innerHTML = "add a multiple choice ques";
+
   addInput.classList.add("btn");
   addInput.classList.add("btn-dark");
-  addmultiple.classList.add("btn");
-  addmultiple.classList.add("btn-dark");
+
   const allinputsDivs = document.createElement("div");
 
   getsectionHeader.addEventListener("click", () => {
@@ -71,8 +78,9 @@ openCanvas.addEventListener("click", () => {
       alert("add some heading to the section");
     } else {
       body.appendChild(addInput);
-      body.appendChild(addmultiple);
+
       section.sectionName = sectionHeader.value;
+      section.type = "non-multiple";
 
       body.appendChild(allinputsDivs);
       while (allinputsDivs.hasChildNodes()) {
@@ -158,7 +166,7 @@ openCanvas.addEventListener("click", () => {
 
     inputOPtions.appendChild(createthisQuestion);
     body.removeChild(addInput);
-    body.removeChild(addmultiple);
+
     //select over
 
     //classlists
@@ -224,7 +232,7 @@ openCanvas.addEventListener("click", () => {
         questions.label = labelInput.value;
         questions.type = selectType.value;
         body.appendChild(addInput);
-        body.appendChild(addmultiple);
+
         inputOPtions.removeChild(createthisQuestion);
         thisInputdiv.removeChild(checkRequired);
         console.log(questions);
@@ -247,7 +255,6 @@ openCanvas.addEventListener("click", () => {
               deleteChilds(sectionHeaderDiv);
               deleteChilds(allinputsDivs);
               deleteChilds(submitSectiondiv);
-
               deleteChilds(inputOPtions);
               close.click();
               console.log(formsArr);
@@ -263,6 +270,7 @@ openCanvas.addEventListener("click", () => {
               deleteChilds(sectionHeaderDiv);
               deleteChilds(allinputsDivs);
               deleteChilds(submitSectiondiv);
+              deleteChilds(inputOPtions);
               close.click();
               updateDom();
             }
@@ -272,88 +280,112 @@ openCanvas.addEventListener("click", () => {
     });
   });
 
-  addmultiple.addEventListener("click", () => {
-    const multipleSection = {
-      id: Date.now(),
-      type: "",
-      question: "",
-      choices: [],
-    };
-    deleteChilds(submitSectiondiv);
-    body.appendChild(submitSectiondiv);
+  //   const multipleSection = {
+  //     id: Date.now(),
+  //     type: "",
+  //     sectionName: "",
+  //     question: "",
+  //     choices: [],
+  //   };
+});
 
-    const multiInputdiv = document.createElement("div");
-    deleteChilds(multiInputdiv);
-    const multiinputOPtions = document.createElement("div");
-    deleteChilds(multiinputOPtions);
-    const createMultiquestion = document.createElement("button");
-    createMultiquestion.innerHTML = "create question";
-    const deleteDiv = document.createElement("button");
-    deleteDiv.innerHTML = "delete";
-    allinputsDivs.appendChild(multiInputdiv);
+openleftcanvas.addEventListener("click", () => {
+  const multipleSection = {
+    id: Date.now(),
+    type: "",
+    question: "",
+    choices: [],
+  };
+  const submitMulti = document.createElement("button");
+  submitMulti.innerHTML = "submit ";
+  const multiData = document.createElement("div");
 
-    const multiQuestion = document.createElement("input");
-    multiQuestion.placeholder = "question";
-    const addChoice = document.createElement("button");
-    addChoice.innerHTML = "add a choice";
+  leftbody.appendChild(multiData);
 
-    multiInputdiv.appendChild(multiQuestion);
-    multiInputdiv.appendChild(multiinputOPtions);
-    multiinputOPtions.appendChild(addChoice);
-    multiinputOPtions.appendChild(deleteDiv);
-    multiinputOPtions.appendChild(createMultiquestion);
+  closeMulti.addEventListener("click", () => {
+    deleteChilds(multiData);
+  });
 
-    addChoice.addEventListener("click", () => {
-      multiInputdiv.removeChild(multiinputOPtions);
+  const questionDiv = document.createElement("div");
+  const mquestionInput = document.createElement("input");
+  mquestionInput.placeholder = "enter the question";
+  const getmQuestion = document.createElement("button");
+  getmQuestion.innerHTML = "save question";
+  multiData.appendChild(questionDiv);
+  questionDiv.appendChild(mquestionInput);
+  questionDiv.appendChild(getmQuestion);
 
-      const newChoice = document.createElement("input");
-      const confirmnewChoice = document.createElement("button");
-      newChoice.placeholder = "add a option/choice";
-      multiInputdiv.appendChild(newChoice);
+  const thisMultidiv = document.createElement("div");
+  leftbody.appendChild(thisMultidiv);
 
-      confirmnewChoice.innerHTML = "done";
-      multiInputdiv.appendChild(confirmnewChoice);
-    });
-    confirmnewChoice.addEventListener("click", () => {
-      multiInputdiv.removeChild(confirmnewChoice);
-      multiInputdiv.appendChild(multiinputOPtions);
-      multipleSection.choices.push(newChoice.value);
-      console.log(multipleSection);
-    });
-    createMultiquestion.addEventListener("click", () => {
-      multipleSection.type = "multi";
-      multipleSection.question = multiQuestion.value;
-      if (localStorage.getItem("forms") !== null) {
-        const mulformsArr = JSON.parse(localStorage.getItem("forms"));
-        console.log(mulformsArr);
-        mulformsArr.push(multipleSection);
-        console.log(mulformsArr);
-        deleteChilds(body);
-        deleteChilds(formData);
-        deleteChilds(sectionHeaderDiv);
-        deleteChilds(allinputsDivs);
-        deleteChilds(submitSectiondiv);
+  getmQuestion.addEventListener("click", () => {
+    if (mquestionInput.value == "") {
+      alert("enter the question first!!!");
+    } else {
+      multipleSection.question = mquestionInput.value;
+      multipleSection.type = "multiple";
+      const thisMultiInputs = document.createElement("div");
+      multiData.appendChild(thisMultiInputs);
+      const addOption = document.createElement("button");
+      addOption.innerHTML = "add a option";
+      thisMultiInputs.appendChild(addOption);
+      questionDiv.removeChild(getmQuestion);
 
-        deleteChilds(multiinputOPtions);
-        close.click();
-        console.log(mulformsArr);
-        localStorage.setItem("forms", JSON.stringify(mulformsArr));
-        updateDom();
-      } else {
-        const mulformsArr = [];
-        mulformsArr.splice(0, mulformsArr.length);
-        mulformsArr.push(multipleSection);
-        localStorage.setItem("forms", JSON.stringify(mulformsArr));
-        deleteChilds(body);
-        deleteChilds(formData);
-        deleteChilds(sectionHeaderDiv);
-        deleteChilds(allinputsDivs);
-        deleteChilds(submitSectiondiv);
-        deleteChilds(multiinputOPtions);
-        close.click();
-        updateDom();
-      }
-    });
+      addOption.addEventListener("click", () => {
+        const optionsdiv = document.createElement("div");
+        const newOptioninp = document.createElement("input");
+        const confirmInput = document.createElement("button");
+        newOptioninp.setAttribute("id", "input");
+
+        newOptioninp.placeholder = "add option value";
+        confirmInput.innerHTML = "ok";
+
+        thisMultiInputs.appendChild(optionsdiv);
+        optionsdiv.appendChild(newOptioninp);
+        optionsdiv.appendChild(confirmInput);
+        thisMultiInputs.removeChild(addOption);
+
+        confirmInput.addEventListener("click", () => {
+          multipleSection.choices.push(newOptioninp.value);
+          thisMultiInputs.appendChild(addOption);
+          console.log(multipleSection);
+          if (multipleSection.choices.length >= 2) {
+            multiData.appendChild(submitMulti);
+          } else {
+          }
+          optionsdiv.removeChild(confirmInput);
+        });
+      });
+      submitMulti.addEventListener("click", () => {
+        if (localStorage.getItem("forms") !== null) {
+          const formsArr = JSON.parse(localStorage.getItem("forms"));
+          console.log(formsArr);
+          formsArr.push(multipleSection);
+          console.log(formsArr);
+
+          deleteChilds(questionDiv);
+          deleteChilds(thisMultiInputs);
+          deleteChilds(thisMultidiv);
+          deleteChilds(multiData);
+
+          closeMulti.click();
+          console.log(formsArr);
+          localStorage.setItem("forms", JSON.stringify(formsArr));
+        } else {
+          const forms = [];
+          forms.splice(0, forms.length);
+          forms.push(multipleSection);
+          localStorage.setItem("forms", JSON.stringify(forms));
+
+          deleteChilds(questionDiv);
+          deleteChilds(thisMultiInputs);
+          deleteChilds(thisMultidiv);
+          deleteChilds(multiData);
+
+          closeMulti.click();
+        }
+      });
+    }
   });
 });
 
@@ -362,5 +394,3 @@ function deleteChilds(divName) {
     divName.removeChild(divName.children[0]);
   }
 }
-
-function updateDom() {}
