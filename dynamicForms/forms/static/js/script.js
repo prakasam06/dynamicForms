@@ -6,6 +6,7 @@ const openCanvas = document.getElementById("openCanvas");
 const close = document.getElementById("closeCanvas");
 const closeMulti = document.getElementById("closemulti");
 const Form = document.getElementById("myForm");
+Form.classList.add("bg-dark");
 
 //btns
 const createQuestion = document.createElement("button");
@@ -20,6 +21,54 @@ createQuestion.innerHTML = "create this question";
 //placeholders
 
 //classlists added for elements
+
+function updateDom() {
+  const formSections = JSON.parse(localStorage.getItem("forms"));
+
+  formSections.forEach((section) => {
+    if (section.type == "non-multiple") {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.classList.add("m-4");
+      Form.appendChild(card);
+      const cardHeader = document.createElement("h4");
+      cardHeader.classList.add("card-header");
+      cardHeader.innerHTML = section.sectionName;
+      card.appendChild(cardHeader);
+      const inputsCard = document.createElement("div");
+      card.appendChild(inputsCard);
+      inputsCard.classList.add("card-body");
+      const row = document.createElement("div");
+      row.classList.add("row");
+      row.classList.add("d-flex");
+      row.style.add = "flex:wrap";
+
+      section.questions.forEach((question) => {
+        const thisInput = document.createElement("div");
+        thisInput.classList.add("card");
+        const thisInputBody = document.createElement("div");
+        thisInputBody.classList.add("card-body");
+        const input = document.createElement("input");
+        input.type = question.type;
+        input.classList.add("form-control");
+        const label = document.createElement("label");
+        label.innerHTML = question.label;
+        label.classList.add("form-label");
+
+        thisInput.appendChild(thisInputBody);
+        thisInputBody.appendChild(label);
+        thisInputBody.appendChild(input);
+
+        const col = document.createElement("div");
+        col.classList.add("col");
+
+        row.appendChild(col);
+        col.appendChild(thisInput);
+        inputsCard.appendChild(row);
+      });
+    }
+  });
+}
 
 openCanvas.addEventListener("click", () => {
   const formData = document.createElement("div");
@@ -258,6 +307,7 @@ openCanvas.addEventListener("click", () => {
               close.click();
               console.log(formsArr);
               localStorage.setItem("forms", JSON.stringify(formsArr));
+              updateDom();
             } else {
               const forms = [];
               forms.splice(0, forms.length);
@@ -270,6 +320,7 @@ openCanvas.addEventListener("click", () => {
               deleteChilds(submitSectiondiv);
               deleteChilds(inputOPtions);
               close.click();
+              updateDom();
             }
           });
         }
@@ -412,5 +463,3 @@ function deleteChilds(divName) {
     divName.removeChild(divName.children[0]);
   }
 }
-
-function updateDom() {}
