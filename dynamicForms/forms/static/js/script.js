@@ -7,8 +7,6 @@ const close = document.getElementById("closeCanvas");
 const closeMulti = document.getElementById("closemulti");
 const Form = document.getElementById("myForm");
 const body = document.getElementById("body");
-body.style.background = "#1d2943";
-body.style.backgroundImage = "linear-gradient(180deg,#1d2943 10%,#173386 100%)";
 
 //btns
 const createQuestion = document.createElement("button");
@@ -34,6 +32,9 @@ function updateDom() {
   Form.classList.add("mb-5");
   Form.classList.add("p-2");
   Form.style.background = "#1d2943";
+  body.style.background = "#1d2943";
+  body.style.backgroundImage =
+    "linear-gradient(180deg,#1d2943 10%,#173386 100%)";
   Form.style.backgroundImage =
     "linear-gradient(180deg,#1d2943 10%,#173386 100%)";
 
