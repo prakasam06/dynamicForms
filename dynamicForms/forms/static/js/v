@@ -9,7 +9,7 @@ let sections = [
         requires: true,
       },
       {
-        label: "Enter your kitkat",
+        label: "Enter your",
         name: "usrename",
         tagType: "text",
         requires: true,

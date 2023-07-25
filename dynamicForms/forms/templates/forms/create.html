@@ -12,7 +12,7 @@
     />
     <title>create_page</title>
   </head>
-  <body>
+  <body id="body">
     <!-- navbar -->
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
@@ -27,6 +27,27 @@
 
           IForms
         </a>
+        <div class="options">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop2"
+            id="openleftcanvas"
+          >
+            add a multiple choice section
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            id="openCanvas"
+          >
+            create input section
+          </button>
+        </div>
       </div>
     </nav>
     <!-- navbar -->
@@ -34,53 +55,63 @@
     <!-- rightcanvas -->
 
     <div
-      class="offcanvas offcanvas-end"
-      data-bs-scroll="true"
-      data-bs-backdrop="false"
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
       tabindex="-1"
-      id="offcanvasScrolling"
-      aria-labelledby="offcanvasScrollingLabel"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
     >
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">
-          create a section here!!!!!
-        </h5>
-        <button
-          type="button"
-          class="btn-close text-reset"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-          id="closeCanvas"
-        ></button>
-      </div>
-      <div class="offcanvas-body" id="canvasBody">
-        <p>instructions</p>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              create a inputs section
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              id="closeCanvas"
+            ></button>
+          </div>
+          <div class="modal-body" id="canvasBody"></div>
+          <div class="modal-footer"></div>
+        </div>
       </div>
     </div>
-
     <!-- rightcanvas -->
 
     <!-- leftCanvas -->
 
     <div
-      class="offcanvas offcanvas-end"
+      class="modal fade"
+      id="staticBackdrop2"
       data-bs-backdrop="static"
+      data-bs-keyboard="false"
       tabindex="-1"
-      id="staticBackdrop"
       aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
     >
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="staticBackdropLabel">MULTI BRUH</h5>
-        <button
-          type="button"
-          class="btn-close"
-          id="closemulti"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body" id="leftcanvas">
-        <p>multiple choice creation space</p>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              multiple choice section
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              id="closemulti"
+            ></button>
+          </div>
+          <div class="modal-body" id="leftcanvas"></div>
+          <div class="modal-footer"></div>
+        </div>
       </div>
     </div>
 
@@ -88,26 +119,6 @@
 
     <!-- createButton -->
 
-    <button
-      class=""
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#staticBackdrop"
-      aria-controls="staticBackdrop"
-      id="openleftcanvas"
-    >
-      add a multiple choice question
-    </button>
-
-    <button
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasScrolling"
-      aria-controls="offcanvasScrolling"
-      id="openCanvas"
-    >
-      create a input section
-    </button>
     <!-- createButton -->
 
     <div class="container">

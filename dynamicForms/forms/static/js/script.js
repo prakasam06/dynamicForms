@@ -6,7 +6,9 @@ const openCanvas = document.getElementById("openCanvas");
 const close = document.getElementById("closeCanvas");
 const closeMulti = document.getElementById("closemulti");
 const Form = document.getElementById("myForm");
-Form.classList.add("bg-dark");
+const body = document.getElementById("body");
+body.style.background = "#1d2943";
+body.style.backgroundImage = "linear-gradient(180deg,#1d2943 10%,#173386 100%)";
 
 //btns
 const createQuestion = document.createElement("button");
@@ -22,49 +24,84 @@ createQuestion.innerHTML = "create this question";
 
 //classlists added for elements
 
+window.onload = () => {
+  updateDom();
+};
+
 function updateDom() {
   const formSections = JSON.parse(localStorage.getItem("forms"));
+  Form.classList.add("mt-5");
+  Form.classList.add("mb-5");
+  Form.classList.add("p-2");
+  Form.style.background = "#1d2943";
+  Form.style.backgroundImage =
+    "linear-gradient(180deg,#1d2943 10%,#173386 100%)";
 
+  deleteChilds(Form);
   formSections.forEach((section) => {
     if (section.type == "non-multiple") {
       const card = document.createElement("div");
+      // card.classList.add("p-3");
+
       card.classList.add("card");
-      card.classList.add("m-4");
+      card.classList.add("mt-5");
+      card.classList.add("mb-5");
+
       Form.appendChild(card);
       const cardHeader = document.createElement("h4");
       cardHeader.classList.add("card-header");
       cardHeader.innerHTML = section.sectionName;
       card.appendChild(cardHeader);
-      const inputsCard = document.createElement("div");
-      card.appendChild(inputsCard);
-      inputsCard.classList.add("card-body");
+
       const row = document.createElement("div");
-      row.classList.add("row");
+
+      row.classList.add("container-fluid");
       row.classList.add("d-flex");
-      row.style.add = "flex:wrap";
+      row.classList.add("flex-wrap");
+      row.classList.add("justify-content-around");
+      row.classList.add("p-2");
+      card.appendChild(row);
+      row.style.backdropFilter = "blur(15px)";
 
       section.questions.forEach((question) => {
-        const thisInput = document.createElement("div");
-        thisInput.classList.add("card");
-        const thisInputBody = document.createElement("div");
-        thisInputBody.classList.add("card-body");
-        const input = document.createElement("input");
-        input.type = question.type;
-        input.classList.add("form-control");
-        const label = document.createElement("label");
-        label.innerHTML = question.label;
-        label.classList.add("form-label");
+        if (question.type == "textarea") {
+          const thisInputrow = document.createElement("div");
+          thisInputrow.classList.add("row");
+          thisInputrow.classList.add("container-fluid");
 
-        thisInput.appendChild(thisInputBody);
-        thisInputBody.appendChild(label);
-        thisInputBody.appendChild(input);
-
-        const col = document.createElement("div");
-        col.classList.add("col");
-
-        row.appendChild(col);
-        col.appendChild(thisInput);
-        inputsCard.appendChild(row);
+          const textareaLabel = document.createElement("label");
+          const textarea = document.createElement("input");
+          textarea.type = question.type;
+          thisInputrow.appendChild(textareaLabel);
+          textareaLabel.classList.add("form-label");
+          textarea.style.height = "100px";
+          thisInputrow.appendChild(textarea);
+          textarea.classList.add("form-control");
+          textareaLabel.innerHTML = question.label;
+          textarea.style.borderStyle = "solid";
+          textarea.style.borderWidth = "0.7px";
+          textarea.style.borderColor = "black";
+          row.appendChild(thisInputrow);
+        } else {
+          const thisInput = document.createElement("div");
+          thisInput.classList.add("bg-white");
+          thisInput.classList.add("col-5");
+          thisInput.classList.add("p-3");
+          thisInput.classList.add("m-1");
+          thisInput.classList.add("container");
+          const input = document.createElement("input");
+          input.type = question.type;
+          input.classList.add("form-control");
+          const label = document.createElement("label");
+          label.innerHTML = question.label;
+          input.style.borderStyle = "solid";
+          input.style.borderWidth = "0.7px";
+          input.style.borderColor = "black";
+          input.style.borderRadius = "7px";
+          thisInput.appendChild(label);
+          thisInput.appendChild(input);
+          row.appendChild(thisInput);
+        }
       });
     }
   });
@@ -73,6 +110,7 @@ function updateDom() {
 openCanvas.addEventListener("click", () => {
   const formData = document.createElement("div");
   close.addEventListener("click", () => {
+    deleteChilds(canvasBody);
     deleteChilds(formData);
   });
 
@@ -81,6 +119,7 @@ openCanvas.addEventListener("click", () => {
 
   formData.classList.add("container");
   formData.classList.add("bg-dark");
+  formData.classList.add("p-4");
   const section = {
     type: "",
     id: Date.now(),
@@ -165,9 +204,9 @@ openCanvas.addEventListener("click", () => {
     selectinputview.innerHTML = "select a input type";
     selectType.appendChild(selectinputview);
 
-    const multiple_option = document.createElement("option");
-    multiple_option.innerHTML = "multiple choice";
-    selectType.appendChild(multiple_option);
+    // const multiple_option = document.createElement("option");
+    // multiple_option.innerHTML = "multiple choice";
+    // selectType.appendChild(multiple_option);
 
     const text_option = document.createElement("option");
     text_option.innerHTML = "text";
@@ -195,7 +234,7 @@ openCanvas.addEventListener("click", () => {
     selectType.appendChild(date_option);
 
     const textarea_option = document.createElement("option");
-    textarea_option.innerHTML = "message";
+    textarea_option.innerHTML = "textarea";
     selectType.appendChild(textarea_option);
 
     allinputsDivs.appendChild(thisInputdiv);
@@ -343,11 +382,12 @@ openleftcanvas.addEventListener("click", () => {
   const multiData = document.createElement("div");
   multiData.classList.add("container");
   multiData.classList.add("bg-dark");
-  multiData.classList.add("p-2");
+  multiData.classList.add("p-4");
 
   leftbody.appendChild(multiData);
 
   closeMulti.addEventListener("click", () => {
+    deleteChilds(leftbody);
     deleteChilds(multiData);
   });
 
